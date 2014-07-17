@@ -1,0 +1,11 @@
+{
+    "require": {
+        "graylog2/gelf-php": "~1.0"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "LogBridge": "src/"
+        }
+    }
+}
