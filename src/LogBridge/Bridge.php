@@ -13,7 +13,7 @@ class Bridge
         $transport = new \Gelf\Transport\UdpTransport($this->log_server, 12201, \Gelf\Transport\UdpTransport::CHUNK_SIZE_LAN);
         $publisher = new \Gelf\Publisher();
         $publisher->addTransport($transport);
-        syslog(1,"Sending message " . $message['short_message']);
+        syslog(6,"Sending message " . $message['short_message']);
         $gelf_message = new \Gelf\Message();
         $gelf_message->setHost($message['host']);
         $gelf_message->setShortMessage($message['short_message']);
