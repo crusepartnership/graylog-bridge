@@ -3,7 +3,7 @@ namespace LogBridge;
 
 class Bridge
 {
-    
+
     public function setLogServer($log_server)
     {
         $this->log_server = $log_server;
@@ -23,11 +23,13 @@ class Bridge
         }
         $gelf_message->setLevel($message['level']);
         $gelf_message->setLine($message['line']);
-        $additional_keys = array_filter(array_keys($message), function ($k){ return strpos($k, '_')===0; }); 
+        $additional_keys = array_filter(array_keys($message), function ($k){ return strpos($k, '_')===0; });
         $additional_fields = array_intersect_key($message, array_flip($additional_keys));
         foreach ($additional_fields as $key => $value) {
             $gelf_message->setAdditional(substr($key, 1), $value);
         }
+        // set the time that the log reached here, mostly so we can see the difference with logs from apps
+        $gelf_message->setAdditional('logged_timestamp', date("Y-m-dTH:i:s.Z"));
         $publisher->publish($gelf_message);
     }
 
